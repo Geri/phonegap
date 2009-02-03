@@ -76,9 +76,15 @@ void alert(NSString *message) {
 	imageView = [[UIImageView alloc] initWithImage:[[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"Default" ofType:@"png"]]];
 	[window addSubview:imageView];
   
-	activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-	[window addSubview:activityView];
-	[activityView startAnimating];
+	//for the activityView (urbian.org)
+	activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+	activityView.frame = CGRectMake(139.0f-18.0f, 80.0f, 37.0f, 37.0f);
+	//Center to view
+	activityView.center = webView.center;
+	activityView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+	activityView.hidesWhenStopped = YES;
+	[webView addSubview:activityView];
+	
 	[window makeKeyAndVisible];
 
 	
@@ -210,6 +216,21 @@ void alert(NSString *message) {
 				// Cleanup any memory that may not be caught
 				sound = [[Sound alloc] initWithContentsOfFile:[mainBundle pathForResource:file ofType:ext]];
 				[sound play];
+				
+			} else if([(NSString *)[parts objectAtIndex:1] isEqualToString:@"waiting"]) {
+			//added by urbian
+				// start/stop activityView animation
+				//-  show a Activity Indicator View, eg while loading a new page
+				//-  use "gap:waiting:start" and "gap:waiting:stop" 
+				
+				NSLog(@"Waiting ..");
+				if([(NSString *)[parts objectAtIndex:2] isEqualToString:@"start"]) {
+					[activityView startAnimating];
+				} else {
+					if ([activityView isAnimating]) {
+						[activityView stopAnimating];
+					}
+				}
 			}
 			
 			return NO;
