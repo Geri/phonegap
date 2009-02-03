@@ -10,7 +10,7 @@
 @synthesize viewController;
 
 @synthesize lastKnownLocation;
-@synthesize imagePickerController;
+@synthesize picker; //urbian
 
 void alert(NSString *message) {
     UIAlertView *openURLAlert = [[UIAlertView alloc] initWithTitle:@"Alert" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -26,17 +26,7 @@ void alert(NSString *message) {
 	[locationManager startUpdatingLocation];
 	
 	webView.delegate = self;
-  
-	// Set up the image picker controller and add it to the view
-	imagePickerController = [[UIImagePickerController alloc] init];
-	
-	// Im not sure why the next line was giving me a warning... any ideas?
-	// when this is commented out, the cancel button no longer works.
-	imagePickerController.delegate = self;
-	imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-	imagePickerController.view.hidden = YES;
-	//[window addSubview:imagePickerController.view];
-	
+  	
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:1.0/40.0];
 	[[UIAccelerometer sharedAccelerometer] setDelegate:self];
 
@@ -144,6 +134,47 @@ void alert(NSString *message) {
 				
 				[jsCallBack release];
 			} else if([(NSString *)[parts objectAtIndex:1] isEqualToString:@"getphoto"]){
+				
+				// added/modified by urbian.org - g.mueller @urbian.org
+					
+				NSUInteger imageSource;
+				
+				//set upload url
+				photoUploadUrl = [parts objectAtIndex:3];
+				[photoUploadUrl retain];
+				
+				NSLog([@"photo-url: " stringByAppendingString:photoUploadUrl]);
+				
+				//which image source
+				if([(NSString *)[parts objectAtIndex:2] isEqualToString:@"fromCamera"]){
+					imageSource = UIImagePickerControllerSourceTypeCamera;
+				} else if([(NSString *)[parts objectAtIndex:2] isEqualToString:@"fromLibrary"]){
+					imageSource = UIImagePickerControllerSourceTypePhotoLibrary;	
+				} else {
+					NSLog(@"photo: no Source type set");
+					return NO;
+				}
+				
+				//check if source is available
+				if([UIImagePickerController isSourceTypeAvailable:imageSource])
+				{
+					picker = [[UIImagePickerController alloc]init];
+					picker.sourceType = imageSource;
+					picker.allowsImageEditing = YES;
+					picker.delegate = self;
+					
+					[viewController presentModalViewController:picker animated:YES];
+					
+				} else {
+					NSLog(@"photo: source not available!");
+					return NO;
+				}
+				
+				webView.hidden = YES;
+				
+				NSLog(@"photo: dialog open now!");
+				
+				/* old code
 				NSLog(@"Photo request!");
 				NSLog([parts objectAtIndex:2]);
 			
@@ -151,6 +182,8 @@ void alert(NSString *message) {
 				webView.hidden = YES;
 				[window bringSubviewToFront:imagePickerController.view];
 				NSLog(@"photo dialog open now!");
+				 */
+				 
 			} else if([(NSString *)[parts objectAtIndex:1] isEqualToString:@"vibrate"]){
 				Vibrate *vibration = [[Vibrate alloc] init];
 				[vibration vibrate];
@@ -201,19 +234,16 @@ void alert(NSString *message) {
 	[webView stringByEvaluatingJavaScriptFromString:jsCallBack];
 }
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)theImage editingInfo:(NSDictionary *)editingInfo
+- (void)imagePickerController:(UIImagePickerController *)thePicker didFinishPickingImage:(UIImage *)theImage editingInfo:(NSDictionary *)editingInfo
 {
+	
+	//modified by urbian.org - g.mueller @urbian.org
+	
     NSLog(@"photo: picked image");
 	
-	// Dismiss the image selection, hide the picker and show the image view with the picked image
-	[picker dismissModalViewControllerAnimated:YES];
-	imagePickerController.view.hidden = YES;
+	NSData * imageData = UIImageJPEGRepresentation(theImage, 0.75);
 	
-	UIDevice * dev = [UIDevice currentDevice];
-	NSString *uniqueId = dev.uniqueIdentifier;
-	NSData * imageData = UIImageJPEGRepresentation(theImage, 0.75);	
-	NSString *urlString = [@"http://phonegap.com/demo/upload.php?" stringByAppendingString:@"uid="];
-	urlString = [urlString stringByAppendingString:uniqueId];
+	NSString *urlString = [@"http://" stringByAppendingString:photoUploadUrl]; // upload the photo to this url
 	
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] init] autorelease];
 	[request setURL:[NSURL URLWithString:urlString]];
@@ -228,42 +258,83 @@ void alert(NSString *message) {
 	//create the body
 	NSMutableData *postBody = [NSMutableData data];
 	[postBody appendData:[[NSString stringWithFormat:@"--%@\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-	
+
 	//add data field and file data
-	[postBody appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"data\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	[postBody appendData:[[NSString stringWithString:@"Content-Disposition: form-data; name=\"photo_0\"; filename=\"photo\"\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
 	[postBody appendData:[[NSString stringWithString:@"Content-Type: application/octet-stream\r\n\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+	
 	[postBody appendData:[NSData dataWithData:imageData]];
 	[postBody appendData:[[NSString stringWithFormat:@"\r\n--%@--\r\n",stringBoundary] dataUsingEncoding:NSUTF8StringEncoding]];
-
+	
 	// ---------
 	[request setHTTPBody:postBody];
 	
-	NSURLConnection *conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
-	if(conn) {
-		NSLog(@"photo: connection sucess");
-  } 
-  else {
-	  NSLog(@"photo: upload failed!");
-  }
-
+	//NSURLConnection *
+	conn=[[NSURLConnection alloc] initWithRequest:request delegate:self];
+	
+	if(conn) {		
+		receivedData=[[NSMutableData data] retain];
+		NSString *sourceSt = [[NSString alloc] initWithBytes:[receivedData bytes] length:[receivedData length] encoding:NSUTF8StringEncoding];
+		NSLog([@"photo: connection sucess" stringByAppendingString:sourceSt]);
+		
+	} else {
+		NSLog(@"photo: upload failed!");
+	}
+	
+	[[thePicker parentViewController] dismissModalViewControllerAnimated:YES];
+	
 	webView.hidden = NO;
 	[window bringSubviewToFront:webView];
+
 }
 
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)thePicker
 {
 	// Dismiss the image selection and close the program
-	[picker dismissModalViewControllerAnimated:YES];
+	[[thePicker parentViewController] dismissModalViewControllerAnimated:YES];
+	
+	//added by urbian - the webapp should know when the user canceled
+	NSString * jsCallBack = nil;
+	
+	jsCallBack = [[NSString alloc] initWithFormat:@"gotPhoto('CANCEL');", lastUploadedPhoto];
+	[webView stringByEvaluatingJavaScriptFromString:jsCallBack];	
+	[jsCallBack release];
+	
 	// Hide the imagePicker and bring the web page back into focus
-	imagePickerController.view.hidden = YES;
 	NSLog(@"Photo Cancel Request");
 	webView.hidden = NO;
 	[window bringSubviewToFront:webView];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-  NSLog(@"photo: upload finished!");
+  
+	NSLog(@"photo: upload finished!");
+	
+	//added by urbian.org - g.mueller
+	NSString *aStr = [[NSString alloc] initWithData:receivedData encoding:NSUTF8StringEncoding];
+	
+	//upload.php should return "filename=<filename>"
+	NSArray * parts = [aStr componentsSeparatedByString:@"="];
+	//set filename
+	lastUploadedPhoto = (NSString *)[parts objectAtIndex:1];
+	
+	//now the callback: return lastUploadedPhoto
+	
+	NSString * jsCallBack = nil;
+	
+	if(lastUploadedPhoto == nil) lastUploadedPhoto = @"ERROR";
+	
+	jsCallBack = [[NSString alloc] initWithFormat:@"gotPhoto('%@');", lastUploadedPhoto];
+	
+	[webView stringByEvaluatingJavaScriptFromString:jsCallBack];
+	
+	NSLog(@"Succeeded! Received %d bytes of data",[receivedData length]);
+	NSLog(jsCallBack);
+	
+    // release the connection, and the data object
+    [conn release];
+    [receivedData release];
 	
 	#if TARGET_IPHONE_SIMULATOR
 		alert(@"Did finish loading image!");
@@ -271,6 +342,13 @@ void alert(NSString *message) {
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *) response {
+	
+	//added by urbian.org
+	NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+	NSLog(@"HTTP Status Code: %i", [httpResponse statusCode]);
+	
+	[receivedData setLength:0];
+	
 	NSLog(@"HERE RESPONSE");
 }
 
@@ -278,7 +356,7 @@ void alert(NSString *message) {
 {
     // append the new data to the receivedData
     // receivedData is declared as a method instance elsewhere
-    // [receivedData appendData:data];
+    [receivedData appendData:data];
     NSLog(@"photo: progress");
 }
 
@@ -297,8 +375,11 @@ void alert(NSString *message) {
 	[viewController release];
 	[window release];
 	[lastKnownLocation release];
-	[imagePickerController release];
+	[picker release]; //urbian
 	[appURL release];
+	
+	[photoUploadUrl release]; //added by urbian
+	
 	[super dealloc];
 }
 

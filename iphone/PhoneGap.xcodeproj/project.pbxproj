@@ -19,15 +19,15 @@
 		47FAB72A0EF7A663005F55AB /* Sound.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FAB7290EF7A663005F55AB /* Sound.m */; };
 		47FAB72E0EF7A6C6005F55AB /* Contacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FAB72D0EF7A6C6005F55AB /* Contacts.m */; };
 		47FAB7500EF82576005F55AB /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47FAB74F0EF82576005F55AB /* AddressBook.framework */; };
-		8204F3D30E5CB4DC00F2DAA1 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8204F3D20E5CB4DC00F2DAA1 /* icon.png */; };
 		8205CB7D0E68A701006CBEEF /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 8205CB7C0E68A701006CBEEF /* Device.m */; };
-		824041C10E942F0E002F3376 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 824041C00E942F0E002F3376 /* Default.png */; };
 		8254F4BD0E6397F0002FDA36 /* Vibrate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8254F4BC0E6397F0002FDA36 /* Vibrate.m */; };
 		8254F8810E650500002FDA36 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 8254F8800E650500002FDA36 /* Location.m */; };
 		825DFB5E0E464E6C000D0A5D /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = 825DFB5D0E464E6C000D0A5D /* README.markdown */; };
 		828B59CE0E520C7F0096DE8B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828B59CD0E520C7F0096DE8B /* AudioToolbox.framework */; };
 		AA13D2CD0F20245000B18061 /* GlassBgView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13D2CC0F20245000B18061 /* GlassBgView.m */; };
 		AA13D3420F202D0400B18061 /* www in Resources */ = {isa = PBXBuildFile; fileRef = AA13D33F0F202D0400B18061 /* www */; };
+		C6C511080F38927B001C78A6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C511060F38927B001C78A6 /* Default.png */; };
+		C6C511090F38927B001C78A6 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C511070F38927B001C78A6 /* icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,10 +49,8 @@
 		47FAB72C0EF7A6C6005F55AB /* Contacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contacts.h; sourceTree = "<group>"; };
 		47FAB72D0EF7A6C6005F55AB /* Contacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contacts.m; sourceTree = "<group>"; };
 		47FAB74F0EF82576005F55AB /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
-		8204F3D20E5CB4DC00F2DAA1 /* icon.png */ = {isa = PBXFileReference; explicitFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		8205CB7B0E68A701006CBEEF /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		8205CB7C0E68A701006CBEEF /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
-		824041C00E942F0E002F3376 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		8254F4BB0E6397F0002FDA36 /* Vibrate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vibrate.h; sourceTree = "<group>"; };
 		8254F4BC0E6397F0002FDA36 /* Vibrate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vibrate.m; sourceTree = "<group>"; };
 		8254F87F0E650500002FDA36 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
@@ -63,6 +61,8 @@
 		AA13D2CB0F20245000B18061 /* GlassBgView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlassBgView.h; sourceTree = "<group>"; };
 		AA13D2CC0F20245000B18061 /* GlassBgView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlassBgView.m; sourceTree = "<group>"; };
 		AA13D33F0F202D0400B18061 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		C6C511060F38927B001C78A6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		C6C511070F38927B001C78A6 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,9 +118,9 @@
 			children = (
 				AA13D33F0F202D0400B18061 /* www */,
 				AA13D3080F20286200B18061 /* Config */,
-				824041C00E942F0E002F3376 /* Default.png */,
-				8204F3D20E5CB4DC00F2DAA1 /* icon.png */,
 				825DFB5D0E464E6C000D0A5D /* README.markdown */,
+				C6C511060F38927B001C78A6 /* Default.png */,
+				C6C511070F38927B001C78A6 /* icon.png */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -171,9 +171,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* PhoneGap */ = {
+		1D6058900D05DD3D006BFB54 /* Urbian */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "PhoneGap" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Urbian" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -183,7 +183,7 @@
 			);
 			dependencies = (
 			);
-			name = PhoneGap;
+			name = Urbian;
 			productName = Glass;
 			productReference = 1D6058910D05DD3D006BFB54 /* PhoneGap.app */;
 			productType = "com.apple.product-type.application";
@@ -200,7 +200,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* PhoneGap */,
+				1D6058900D05DD3D006BFB54 /* Urbian */,
 			);
 		};
 /* End PBXProject section */
@@ -213,10 +213,10 @@
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* GlassViewController.xib in Resources */,
 				825DFB5E0E464E6C000D0A5D /* README.markdown in Resources */,
-				8204F3D30E5CB4DC00F2DAA1 /* icon.png in Resources */,
-				824041C10E942F0E002F3376 /* Default.png in Resources */,
 				47DC7FB30EFADF9E00D0B526 /* Settings.plist in Resources */,
 				AA13D3420F202D0400B18061 /* www in Resources */,
+				C6C511080F38927B001C78A6 /* Default.png in Resources */,
+				C6C511090F38927B001C78A6 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,15 +280,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Handi Mobility";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos2.1]" = "iPhone Distribution: Handi Mobility";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Gerald Müller";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos2.1]" = "iPhone Distribution: Gerald Müller";
 				CURRENT_PROJECT_VERSION = 1.0.1;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "B02DE0E6-FD92-4854-9B69-3C191831ABA5";
+				PROVISIONING_PROFILE = "98419FEF-6AB5-4784-AA27-38170E7954BB";
+				"PROVISIONING_PROFILE[sdk=iphoneos2.1]" = "98419FEF-6AB5-4784-AA27-38170E7954BB";
 				SDKROOT = iphoneos2.0;
 			};
 			name = Distribution;
@@ -307,7 +308,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Glass_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
-				PRODUCT_NAME = Glass;
+				PRODUCT_NAME = Urbian;
 				PROVISIONING_PROFILE = "B02DE0E6-FD92-4854-9B69-3C191831ABA5";
 			};
 			name = Distribution;
@@ -349,7 +350,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "PhoneGap" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Urbian" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,

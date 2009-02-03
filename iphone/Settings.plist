@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Offline</key>
-	<string>1</string>
+	<string>0</string>
 	<key>Callback</key>
-	<string>http://phonegap.com/demo2/</string>
+	<string>http://192.168.1.2/~Geri/Urbian/</string>
 	<key>DetectPhoneNumber</key>
-	<integer>0</integer>
+	<integer>1</integer>
 </dict>
 </plist>
