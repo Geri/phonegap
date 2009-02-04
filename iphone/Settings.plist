@@ -4,9 +4,23 @@
 <dict>
 	<key>Offline</key>
 	<string>0</string>
-	<key>Callback</key>
+	<key>Callback_2</key>
 	<string>http://192.168.1.2/~Geri/Urbian/</string>
+	<key>Callback</key>
+	<string>http://iphone.urbian.org/module_divShift_main.php?isApp=1&amp;amp;email=gerald.mueller@gmx.at&amp;amp;pass=Rtap!2</string>
 	<key>DetectPhoneNumber</key>
 	<integer>1</integer>
+	<key>LinkToolBar</key>
+	<dict/>
+	<key>Link_1</key>
+	<string>feed</string>
+	<key>Link_2</key>
+	<string>contacts</string>
+	<key>Link_3</key>
+	<string>locations</string>
+	<key>Link_4</key>
+	<string>messages</string>
+	<key>Link_5</key>
+	<string>ublogs</string>
 </dict>
 </plist>

@@ -32,6 +32,16 @@
 	IBOutlet UIImageView *imageView;
 	IBOutlet UIActivityIndicatorView *activityView;
   
+	IBOutlet UIToolbar *urbianToolbar; //added by urbian
+	IBOutlet UIDatePicker *datePicker; //added by urbian
+	IBOutlet UIToolbar *datePickerDone; //added by urbian
+	
+	IBOutlet UIBarButtonItem *linkButton_1; //added by urbian
+	IBOutlet UIBarButtonItem *linkButton_2; //added by urbian
+	IBOutlet UIBarButtonItem *linkButton_3; //added by urbian
+	IBOutlet UIBarButtonItem *linkButton_4; //added by urbian
+	IBOutlet UIBarButtonItem *linkButton_5; //added by urbian
+
 	CLLocationManager *locationManager;
 	CLLocation		  *lastKnownLocation;
 
@@ -40,6 +50,8 @@
 	NSString *lastUploadedPhoto; //added by urbian
 	NSURLConnection *conn; //added by urbian
 	NSMutableData   *receivedData; //added by urbian
+	
+	NSDictionary *dictonary;
 	
 	NSURLConnection *callBackConnection;
 	Sound *sound;
@@ -54,5 +66,9 @@
 
 - (void) imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image2 editingInfo:(NSDictionary *)editingInfo;
 - (void) imagePickerControllerDidCancel:(UIImagePickerController *)picker;
+
+// added by urbian (g.mueller@urbian.org)
+- (IBAction)goToLink: (id)sender;
+- (IBAction)datePickerDoneAction;
 
 @end

@@ -37,19 +37,19 @@ void alert(NSString *message) {
 	NSPropertyListFormat format;
 	NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"plist"];
 	NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
-	NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization
+	dictonary = (NSDictionary *)[NSPropertyListSerialization
 										  propertyListFromData:plistXML
 										  mutabilityOption:NSPropertyListMutableContainersAndLeaves			  
 										  format:&format errorDescription:&errorDesc];
-	
+	[dictonary retain];
 	
 	NSString *mode;
 	NSString *url;
-	int *detectNumber;
+	int detectNumber;
 
-	mode			= [temp objectForKey:@"Offline"];
-	url				= [temp objectForKey:@"Callback"];
-	detectNumber	= [temp objectForKey:@"DetectPhoneNumber"]; 
+	mode			= [dictonary objectForKey:@"Offline"];
+	url				= [dictonary objectForKey:@"Callback"];
+	detectNumber	= (int)[dictonary objectForKey:@"DetectPhoneNumber"]; 
 		
 	if ([mode isEqualToString:@"0"]) {
 		// Online Mode
@@ -217,6 +217,18 @@ void alert(NSString *message) {
 				sound = [[Sound alloc] initWithContentsOfFile:[mainBundle pathForResource:file ofType:ext]];
 				[sound play];
 				
+				
+			} else if([(NSString *)[parts objectAtIndex:1] isEqualToString:@"urbianmenu"]) {
+				
+				//show/hide the menu
+				
+				NSLog(@"Show Menu ...");
+				
+				if([(NSString *)[parts objectAtIndex:2] isEqualToString:@"true"])
+					urbianToolbar.hidden = NO;
+				else 
+					urbianToolbar.hidden = YES;
+				
 			} else if([(NSString *)[parts objectAtIndex:1] isEqualToString:@"waiting"]) {
 			//added by urbian
 				// start/stop activityView animation
@@ -230,6 +242,50 @@ void alert(NSString *message) {
 					if ([activityView isAnimating]) {
 						[activityView stopAnimating];
 					}
+				}
+				
+				
+			} else if([(NSString *)[parts objectAtIndex:1] isEqualToString:@"datepicker"]) {
+				
+				//open a datepicker
+				NSLog(@"Get date ...");
+				
+				//reset datePicker to current date
+				[datePicker setDate:[NSDate date]];
+				
+				//set position
+				if (urbianToolbar.hidden == YES) { 
+					[datePicker setFrame:(CGRectMake(0.0, 250, datePicker.frame.size.width, datePicker.frame.size.height))];
+					[datePickerDone setFrame:(CGRectMake(0.0, 210,datePickerDone.frame.size.width, datePickerDone.frame.size.height))];
+				} else {
+					[datePicker setFrame:(CGRectMake(0.0, 206, datePicker.frame.size.width, datePicker.frame.size.height))];
+					[datePickerDone setFrame:(CGRectMake(0.0, 166,datePickerDone.frame.size.width, datePickerDone.frame.size.height))];
+				}
+				
+				//set datePicker mode
+				if([(NSString *)[parts objectAtIndex:2] isEqualToString:@"date"]) {
+					
+					datePicker.datePickerMode = UIDatePickerModeDate;
+					datePicker.hidden = NO;
+					datePickerDone.hidden = NO;
+					
+				} else if([(NSString *)[parts objectAtIndex:2] isEqualToString:@"time"]) {
+					
+					datePicker.datePickerMode = UIDatePickerModeTime;
+					datePicker.hidden = NO;
+					datePickerDone.hidden = NO;
+					
+				} else if([(NSString *)[parts objectAtIndex:2] isEqualToString:@"datetime"]) {
+					
+					datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+					datePicker.hidden = NO;
+					datePickerDone.hidden = NO;
+					
+				} else if([(NSString *)[parts objectAtIndex:2] isEqualToString:@"cancel"]) {
+					
+					//hides the datepicker
+					datePicker.hidden = YES;
+					datePickerDone.hidden = YES;
 				}
 			}
 			
@@ -389,6 +445,49 @@ void alert(NSString *message) {
 #endif    
 }
 
+// for the urbian toolbar
+
+- (IBAction)goToLink: (id)sender {
+	
+	NSString * jsCallBack = nil;
+	NSString * mLink = nil;
+	
+	if (sender == linkButton_1) mLink = [dictonary objectForKey:@"Link_1"];
+	else if (sender == linkButton_2) mLink = [dictonary objectForKey:@"Link_2"];
+	else if (sender == linkButton_3) mLink = [dictonary objectForKey:@"Link_3"];
+	else if (sender == linkButton_4) mLink = [dictonary objectForKey:@"Link_4"];
+	else if (sender == linkButton_5) mLink = [dictonary objectForKey:@"Link_5"];
+	
+	jsCallBack = [[NSString alloc] initWithFormat:@"change_module('%@', 'module_divShift_%@.php', 'isApp=1');", mLink, mLink];
+	
+	NSLog(jsCallBack);
+	
+	[webView stringByEvaluatingJavaScriptFromString:jsCallBack];
+	[jsCallBack release];
+	
+}
+
+// if user changed Date of Datepicker
+
+- (IBAction) datePickerDoneAction {
+	
+	datePicker.hidden = YES;
+	datePickerDone.hidden = YES;
+	
+	NSString * jsCallBack = nil;
+	NSString * selDate = nil; 
+	
+	selDate = [datePicker.date descriptionWithCalendarFormat:@"'%Y', '%m', '%d', '%X'" timeZone:nil locale:nil];
+	
+	jsCallBack = [[NSString alloc] initWithFormat:@"gotDate(%@);", selDate];
+	[webView stringByEvaluatingJavaScriptFromString:jsCallBack];
+	[jsCallBack release];
+	
+	NSLog(jsCallBack);
+
+} 
+
+
 - (void)dealloc {
 	[appURL release];
 	[activityView release];
@@ -398,8 +497,11 @@ void alert(NSString *message) {
 	[lastKnownLocation release];
 	[picker release]; //urbian
 	[appURL release];
+	[datePicker release]; //urbian
+	[datePickerDone release]; //urbian
 	
 	[photoUploadUrl release]; //added by urbian
+	[dictonary release];
 	
 	[super dealloc];
 }
