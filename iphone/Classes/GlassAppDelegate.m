@@ -45,17 +45,31 @@ void alert(NSString *message) {
 	
 	NSString *mode;
 	NSString *url;
+	NSString *loginUrl;
+	NSString *playSound;
 	int detectNumber;
 
 	mode			= [dictonary objectForKey:@"Offline"];
 	url				= [dictonary objectForKey:@"Callback"];
-	detectNumber	= (int)[dictonary objectForKey:@"DetectPhoneNumber"]; 
+	loginUrl		= [[NSUserDefaults standardUserDefaults] objectForKey:@"LoginCallback"];
+	detectNumber	= (int)[dictonary objectForKey:@"DetectPhoneNumber"];
+	playSound		= [dictonary objectForKey:@"StartSound"];
 		
 	if ([mode isEqualToString:@"0"]) {
 		// Online Mode
-		appURL = [[NSURL URLWithString:url] retain];
+		
+		// check if user is logged in
+		if ((loginUrl == nil) || [loginUrl isEqualToString: @"false"])
+			appURL = [[NSURL URLWithString:url] retain];
+		else
+			appURL = [[NSURL URLWithString:loginUrl] retain];
+		
+		NSLog(loginUrl);
+		NSLog(url);
+		
 		NSURLRequest * aRequest = [NSURLRequest requestWithURL:appURL];
 		[webView loadRequest:aRequest];
+		
 	} else {		
 		// Offline Mode
 		NSString * urlPathString;
@@ -85,11 +99,15 @@ void alert(NSString *message) {
 	activityView.hidesWhenStopped = YES;
 	[webView addSubview:activityView];
 	
+	//plays the start melody
+	if ([playSound isEqualToString:@"1"]) {
+		NSString * startSound;
+		startSound = @"urbian_sound";
+		sound = [[Sound alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:startSound ofType:@"caf"]];
+		[sound play];
+	}
+		
 	[window makeKeyAndVisible];
-
-	
-	//NSBundle * mainBundle = [NSBundle mainBundle];
-
 
 }
 
@@ -99,6 +117,9 @@ void alert(NSString *message) {
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)theWebView {
+
+	//[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+	
 	imageView.hidden = YES;
 }
 
@@ -287,6 +308,40 @@ void alert(NSString *message) {
 					datePicker.hidden = YES;
 					datePickerDone.hidden = YES;
 				}
+			
+			} else if ([(NSString *)[parts objectAtIndex:1] isEqualToString:@"login"]) {
+				
+				// for login this parameter must be the url, if 'false' logout
+				  // gets the new url as following gap:login:your.domain.com?hash=fg7843edfbbah4
+				if (![(NSString *)[parts objectAtIndex:2] isEqualToString:@"false"]) {
+					
+					NSLog(@"urbian login");
+					NSString *url2save = [@"http://" stringByAppendingString:(NSString *)[parts objectAtIndex:2]];
+					[[NSUserDefaults standardUserDefaults] setValue:url2save forKey:@"LoginCallback"];
+				
+				} else if([(NSString *)[parts objectAtIndex:2] isEqualToString:@"false"]) {
+				
+					NSLog(@"urbian logout");
+					//use gap:login:false
+					[[NSUserDefaults standardUserDefaults] setValue:@"false" forKey:@"LoginCallback"];
+				}
+				
+				//Register and save the dictionary to the disk
+				[[NSUserDefaults standardUserDefaults] synchronize];
+								
+				
+			//return user infos (url.txt) in case auf an session timeout
+				
+			} else if([(NSString *)[parts objectAtIndex:1] isEqualToString:@"getuserinfo"]) {
+				
+				NSString* tmpUrl = nil;
+				tmpUrl = [dictonary objectForKey:@"LoginCallback"];
+				jsCallBack = [[NSString alloc] initWithFormat:@"userinfo('%@');", tmpUrl];
+				NSLog([[NSUserDefaults standardUserDefaults] objectForKey:@"LoginCallback"]);
+				[theWebView stringByEvaluatingJavaScriptFromString:jsCallBack];
+				
+				[jsCallBack release];
+							
 			}
 			
 			return NO;
@@ -458,7 +513,9 @@ void alert(NSString *message) {
 	else if (sender == linkButton_4) mLink = [dictonary objectForKey:@"Link_4"];
 	else if (sender == linkButton_5) mLink = [dictonary objectForKey:@"Link_5"];
 	
-	jsCallBack = [[NSString alloc] initWithFormat:@"change_module('%@', 'module_divShift_%@.php', 'isApp=1');", mLink, mLink];
+	//jsCallBack = [[NSString alloc] initWithFormat:@"change_module('%@', 'module_divShift_%@.php', 'isApp=1');", mLink, mLink];
+	
+	jsCallBack = [mLink copy];
 	
 	NSLog(jsCallBack);
 	
@@ -487,8 +544,8 @@ void alert(NSString *message) {
 
 } 
 
-
 - (void)dealloc {
+	
 	[appURL release];
 	[activityView release];
 	[imageView release];

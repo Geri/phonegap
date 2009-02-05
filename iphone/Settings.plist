@@ -8,17 +8,19 @@
 	<string>http://192.168.1.2/~Geri/Urbian/</string>
 	<key>DetectPhoneNumber</key>
 	<integer>1</integer>
+	<key>StartSound</key>
+	<string>1</string>
 	<key>LinkToolBar</key>
 	<dict/>
 	<key>Link_1</key>
-	<string>feed</string>
+	<string>change_module(&apos;feed&apos;, &apos;module_divShift_feed.php&apos;, &apos;isApp=1&apos;);</string>
 	<key>Link_2</key>
-	<string>contacts</string>
+	<string>change_module(&apos;contacts&apos;, &apos;module_divShift_contacts.php&apos;, &apos;isApp=1&apos;);</string>
 	<key>Link_3</key>
-	<string>locations</string>
+	<string>change_module(&apos;locations&apos;, &apos;module_divShift_locations.php&apos;, &apos;isApp=1&apos;);</string>
 	<key>Link_4</key>
-	<string>messages</string>
+	<string>change_module(&apos;messages&apos;, &apos;module_divShift_messages.php&apos;, &apos;isApp=1&apos;);</string>
 	<key>Link_5</key>
-	<string>ublogs</string>
+	<string>change_module(&apos;ublogs&apos;, &apos;module_divShift_ublogs.php&apos;, &apos;isApp=1&apos;);</string>
 </dict>
 </plist>

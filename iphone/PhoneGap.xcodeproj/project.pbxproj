@@ -26,6 +26,8 @@
 		828B59CE0E520C7F0096DE8B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 828B59CD0E520C7F0096DE8B /* AudioToolbox.framework */; };
 		AA13D2CD0F20245000B18061 /* GlassBgView.m in Sources */ = {isa = PBXBuildFile; fileRef = AA13D2CC0F20245000B18061 /* GlassBgView.m */; };
 		AA13D3420F202D0400B18061 /* www in Resources */ = {isa = PBXBuildFile; fileRef = AA13D33F0F202D0400B18061 /* www */; };
+		C6A010840F3AE41500B58CC6 /* dist.plist in Resources */ = {isa = PBXBuildFile; fileRef = C6A010830F3AE41500B58CC6 /* dist.plist */; };
+		C6A011190F3AFCB300B58CC6 /* urbian_sound.caf in Resources */ = {isa = PBXBuildFile; fileRef = C6A011180F3AFCB300B58CC6 /* urbian_sound.caf */; };
 		C6C511080F38927B001C78A6 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C511060F38927B001C78A6 /* Default.png */; };
 		C6C511090F38927B001C78A6 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C511070F38927B001C78A6 /* icon.png */; };
 		C6C511400F38CE8B001C78A6 /* messages.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C5113B0F38CE8B001C78A6 /* messages.png */; };
@@ -66,6 +68,8 @@
 		AA13D2CB0F20245000B18061 /* GlassBgView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlassBgView.h; sourceTree = "<group>"; };
 		AA13D2CC0F20245000B18061 /* GlassBgView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlassBgView.m; sourceTree = "<group>"; };
 		AA13D33F0F202D0400B18061 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		C6A010830F3AE41500B58CC6 /* dist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dist.plist; sourceTree = "<group>"; };
+		C6A011180F3AFCB300B58CC6 /* urbian_sound.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = urbian_sound.caf; sourceTree = "<group>"; };
 		C6C511060F38927B001C78A6 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		C6C511070F38927B001C78A6 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		C6C5113B0F38CE8B001C78A6 /* messages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = messages.png; sourceTree = "<group>"; };
@@ -130,8 +134,6 @@
 				AA13D33F0F202D0400B18061 /* www */,
 				AA13D3080F20286200B18061 /* Config */,
 				825DFB5D0E464E6C000D0A5D /* README.markdown */,
-				C6C511060F38927B001C78A6 /* Default.png */,
-				C6C511070F38927B001C78A6 /* icon.png */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -153,6 +155,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C6A011180F3AFCB300B58CC6 /* urbian_sound.caf */,
 				2899E5210DE3E06400AC0155 /* GlassViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 			);
@@ -173,6 +176,7 @@
 		AA13D3080F20286200B18061 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				C6A010830F3AE41500B58CC6 /* dist.plist */,
 				47DC7FB20EFADF9E00D0B526 /* Settings.plist */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 			);
@@ -182,6 +186,8 @@
 		C6C5113A0F38CE68001C78A6 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				C6C511060F38927B001C78A6 /* Default.png */,
+				C6C511070F38927B001C78A6 /* icon.png */,
 				C6C5113B0F38CE8B001C78A6 /* messages.png */,
 				C6C5113C0F38CE8B001C78A6 /* feed.png */,
 				C6C5113D0F38CE8B001C78A6 /* uBlogs.png */,
@@ -245,6 +251,8 @@
 				C6C511420F38CE8B001C78A6 /* uBlogs.png in Resources */,
 				C6C511430F38CE8B001C78A6 /* places.png in Resources */,
 				C6C511440F38CE8B001C78A6 /* contacts.png in Resources */,
+				C6A010840F3AE41500B58CC6 /* dist.plist in Resources */,
+				C6A011190F3AFCB300B58CC6 /* urbian_sound.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +282,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Gerald Müller";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos2.2]" = "iPhone Distribution: Gerald Müller";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -285,6 +295,8 @@
 				GCC_PREFIX_HEADER = PhoneGap_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = PhoneGap;
+				PROVISIONING_PROFILE = "98419FEF-6AB5-4784-AA27-38170E7954BB";
+				"PROVISIONING_PROFILE[sdk=iphoneos2.2]" = "98419FEF-6AB5-4784-AA27-38170E7954BB";
 			};
 			name = Debug;
 		};
@@ -309,7 +321,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Gerald Müller";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos2.1]" = "iPhone Distribution: Gerald Müller";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gerald Müller";
 				CURRENT_PROJECT_VERSION = 1.0.1;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -317,7 +329,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "98419FEF-6AB5-4784-AA27-38170E7954BB";
-				"PROVISIONING_PROFILE[sdk=iphoneos2.1]" = "98419FEF-6AB5-4784-AA27-38170E7954BB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "98419FEF-6AB5-4784-AA27-38170E7954BB";
 				SDKROOT = iphoneos2.0;
 			};
 			name = Distribution;
@@ -326,6 +338,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_ENTITLEMENTS = dist.plist;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Gerald Müller";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Gerald Müller";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -334,10 +349,11 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Glass_Prefix.pch;
+				GCC_PREFIX_HEADER = PhoneGap_Prefix.pch;
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Urbian;
-				PROVISIONING_PROFILE = "B02DE0E6-FD92-4854-9B69-3C191831ABA5";
+				PROVISIONING_PROFILE = "98419FEF-6AB5-4784-AA27-38170E7954BB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "98419FEF-6AB5-4784-AA27-38170E7954BB";
 			};
 			name = Distribution;
 		};
