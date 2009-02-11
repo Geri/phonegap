@@ -5,7 +5,7 @@
 	<key>Offline</key>
 	<string>0</string>
 	<key>Callback</key>
-	<string>http://192.168.1.2/~Geri/Urbian/</string>
+	<string>http://iphone.urbian.org/?isApp=1</string>
 	<key>DetectPhoneNumber</key>
 	<integer>1</integer>
 	<key>StartSound</key>

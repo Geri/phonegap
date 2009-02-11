@@ -335,9 +335,11 @@ void alert(NSString *message) {
 			} else if([(NSString *)[parts objectAtIndex:1] isEqualToString:@"getuserinfo"]) {
 				
 				NSString* tmpUrl = nil;
-				tmpUrl = [dictonary objectForKey:@"LoginCallback"];
+				tmpUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"LoginCallback"];
 				jsCallBack = [[NSString alloc] initWithFormat:@"userinfo('%@');", tmpUrl];
-				NSLog([[NSUserDefaults standardUserDefaults] objectForKey:@"LoginCallback"]);
+				
+				NSLog(jsCallBack);
+				
 				[theWebView stringByEvaluatingJavaScriptFromString:jsCallBack];
 				
 				[jsCallBack release];
